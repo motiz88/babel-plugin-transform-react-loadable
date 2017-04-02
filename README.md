@@ -9,7 +9,7 @@
 [![js-semistandard-style][semistandard-image]][semistandard-url]
 [![MIT License][license-image]][license-url]
 
-Babel plugin to make advanced usage of [`react-loadable`](https://github.com/thejameskyle/react-loadable) easier.
+Experimental Babel plugin to make advanced usage of [`react-loadable`](https://github.com/thejameskyle/react-loadable) easier.
 
 ## Examples
 
