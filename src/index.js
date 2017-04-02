@@ -1,7 +1,7 @@
 /* @flow */
 
-import type { NodePath, Scope } from "babel-traverse";
-import syntaxDynamicImport from "babel-plugin-syntax-dynamic-import";
+import type { NodePath } from 'babel-traverse';
+import syntaxDynamicImport from 'babel-plugin-syntax-dynamic-import';
 
 type BabelVisitors = {
   [key: string]: (path: NodePath) => void
@@ -18,7 +18,7 @@ function isObjectPropertyWithName (path: NodePath, name: string): boolean {
   if (!path.node.computed) {
     return path.node.key.name === name || path.node.key.value === name;
   }
-  const keyEval = path.get("key").evaluate();
+  const keyEval = path.get('key').evaluate();
   return keyEval.confident && keyEval.value === name;
 }
 
@@ -45,7 +45,7 @@ export default function (
   return {
     inherits: syntaxDynamicImport,
     visitor: {
-      Import(path) {
+      Import (path: NodePath) {
         const options = {
           server: true,
           webpack: false,
@@ -55,10 +55,10 @@ export default function (
           return;
         }
         const importCall: NodePath = path.parentPath;
-        if (!importCall.isCallExpression() || path.parentKey !== "callee") {
+        if (!importCall.isCallExpression() || path.parentKey !== 'callee') {
           return;
         }
-        const importArgs: ?Array<NodePath> = importCall.get("arguments");
+        const importArgs: ?Array<NodePath> = importCall.get('arguments');
         if (!Array.isArray(importArgs) || importArgs.length !== 1) {
           return;
         }
@@ -70,34 +70,34 @@ export default function (
         if (
           !importCallContainer.isArrowFunctionExpression() ||
           !importCallContainer.node.expression ||
-          importCall.parentKey !== "body"
+          importCall.parentKey !== 'body'
         ) {
           return;
         }
         const loaderProp = importCallContainer.parentPath;
         if (
-          !isObjectPropertyWithName(loaderProp, "loader") ||
-          importCallContainer.parentKey !== "value"
+          !isObjectPropertyWithName(loaderProp, 'loader') ||
+          importCallContainer.parentKey !== 'value'
         ) {
           return;
         }
         const loadableConfig = loaderProp.parentPath;
         if (
           !loadableConfig.isObjectExpression() ||
-          loaderProp.parentKey !== "properties"
+          loaderProp.parentKey !== 'properties'
         ) {
           return;
         }
         const loadableCall = loadableConfig.parentPath;
         if (
           !loadableCall.isCallExpression() ||
-          loadableConfig.parentKey !== "arguments" ||
+          loadableConfig.parentKey !== 'arguments' ||
           loadableConfig.key !== 0 ||
           loadableCall.node.arguments.length !== 1
         ) {
           return;
         }
-        const loadableIdentifier = loadableCall.get("callee");
+        const loadableIdentifier = loadableCall.get('callee');
         const loadableBinding = loadableIdentifier.scope.getBinding(
           loadableIdentifier.node.name
         );
@@ -113,10 +113,10 @@ export default function (
           return;
         }
         const loadableSource = loadableImportDeclaration
-          .get("source")
+          .get('source')
           .evaluate();
         if (
-          !loadableSource.confident || loadableSource.value !== "react-loadable"
+          !loadableSource.confident || loadableSource.value !== 'react-loadable'
         ) {
           return;
         }
