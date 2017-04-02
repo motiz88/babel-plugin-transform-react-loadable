@@ -9,9 +9,6 @@ dependencies:
     - npm install -g npm@3
 test:
   post:
-    - cp benchmark.log $CIRCLE_ARTIFACTS/
-    - mkdir -p $CIRCLE_ARTIFACTS/benchmarks
-    - cp benchmarks/*.transformed.js $CIRCLE_ARTIFACTS/benchmarks
     - npm run coverage:html -- --report-dir $CIRCLE_ARTIFACTS/coverage
     - npm run coverage:codecov && bash <(curl -s https://codecov.io/bash)
 checkout:

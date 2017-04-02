@@ -2,7 +2,6 @@
 <PROJECT_ROOT>/data/.*
 <PROJECT_ROOT>/lib/.*
 <PROJECT_ROOT>/test/artifacts/.*
-<PROJECT_ROOT>/test/benchmarks/.*
 <PROJECT_ROOT>/test/example/.*
 <PROJECT_ROOT>/test/fixtures/.*
 .*/node_modules/.*eslint.*

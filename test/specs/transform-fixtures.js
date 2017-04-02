@@ -8,9 +8,12 @@ function normalize (str) {
   return str.replace(/\r\n?/g, '\n').trim();
 }
 
-describe('hoist-nested-functions', () => {
+describe('transform-react-loadable', () => {
   const fixturesDir = path.join(__dirname, '../fixtures');
-  fs.readdirSync(fixturesDir).forEach((caseName) => {
+  for (const caseName of fs.readdirSync(fixturesDir)) {
+    if (caseName.startsWith('.')) {
+      continue;
+    }
     it(`should ${caseName.split('-').join(' ')}`, () => {
       const fixtureDir = path.join(fixturesDir, caseName);
       const actualPath = path.join(fixtureDir, 'actual.js');
@@ -24,5 +27,5 @@ describe('hoist-nested-functions', () => {
 
       assert.equal(normalize(actual), normalize(expected));
     });
-  });
+  }
 });
