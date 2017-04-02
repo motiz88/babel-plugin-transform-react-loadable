@@ -11,7 +11,7 @@ type BabelPlugin = {
   visitor?: BabelVisitors
 };
 
-function isObjectPropertyWithName(path, name) {
+function isObjectPropertyWithName (path: NodePath, name: string): boolean {
   if (!path.isObjectProperty()) {
     return false;
   }
@@ -22,7 +22,13 @@ function isObjectPropertyWithName(path, name) {
   return keyEval.confident && keyEval.value === name;
 }
 
-export default function(
+function hasPropertyWithName (path: NodePath, key: string): boolean {
+  return path
+    .get('properties')
+    .some(prop => isObjectPropertyWithName(prop, key));
+}
+
+export default function (
   { types: t, template }: { types: BabelTypes, template: BabelTemplate }
 ): BabelPlugin {
   const webpackTemplate = template(
@@ -32,20 +38,10 @@ export default function(
   );
   const serverTemplate = template(
     `
-    path.join(__dirname, MODULE)
+    PATH.join(__dirname, MODULE)
   `
   );
-  function insertNewPropertyAfter(path, key, value) {
-    const object = path.parentPath;
-    if (
-      !object
-        .get("properties")
-        .some(prop => isObjectPropertyWithName(prop, key))
-    ) {
-      const prop = t.objectProperty(t.identifier(key), value);
-      path.insertAfter(prop);
-    }
-  }
+
   return {
     inherits: syntaxDynamicImport,
     visitor: {
@@ -125,23 +121,30 @@ export default function(
           return;
         }
 
-        if (options.webpack) {
-          insertNewPropertyAfter(
-            loaderProp,
-            "webpackRequireWeakId",
+        if (
+          options.webpack &&
+          !hasPropertyWithName(loadableConfig, 'webpackRequireWeakId')
+        ) {
+          const prop = t.objectProperty(
+            t.identifier('webpackRequireWeakId'),
             webpackTemplate({
               MODULE: t.stringLiteral(importString.value)
             }).expression
           );
+          loaderProp.insertAfter(prop);
         }
-        if (options.server) {
-          insertNewPropertyAfter(
-            loaderProp,
-            "serverSideRequirePath",
+        if (
+          options.server &&
+          !hasPropertyWithName(loadableConfig, 'serverSideRequirePath')
+        ) {
+          const prop = t.objectProperty(
+            t.identifier('serverSideRequirePath'),
             serverTemplate({
-              MODULE: t.stringLiteral(importString.value)
+              MODULE: t.stringLiteral(importString.value),
+              PATH: this.addImport('path', 'default', 'path')
             }).expression
           );
+          loaderProp.insertAfter(prop);
         }
       }
     }
