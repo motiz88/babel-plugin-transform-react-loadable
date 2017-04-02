@@ -1,5 +1,11 @@
 {
-  "presets": ["es2015-node4"],
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": 4
+      }
+    }]
+  ],
   "plugins": ["syntax-flow", "syntax-dynamic-import", "transform-flow-strip-types", "transform-async-to-generator"],
   "env": {
     "development": {
