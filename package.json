@@ -1,7 +1,7 @@
 {
   "name": "babel-plugin-transform-react-loadable",
   "version": "0.0.0-development",
-  "description": "Babel plugin to make advanced usage of react-loadable easier.",
+  "description": "Experimental Babel plugin to make advanced usage of react-loadable easier.",
   "repository": {
     "type": "git",
     "url": "https://github.com/motiz88/babel-plugin-transform-react-loadable.git"
