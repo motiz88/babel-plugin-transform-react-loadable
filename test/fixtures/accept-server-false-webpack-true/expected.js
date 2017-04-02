@@ -1,5 +1,6 @@
+import Loadable from 'react-loadable';
 let LoadableMyComponent = Loadable({
   loader: () => import('./MyComponent'),
-  LoadingComponent: MyLoadingComponent,
-  webpackRequireWeakId: () => require.resolveWeak('./MyComponent')
+  webpackRequireWeakId: () => require.resolveWeak('./MyComponent'),
+  LoadingComponent: MyLoadingComponent
 });

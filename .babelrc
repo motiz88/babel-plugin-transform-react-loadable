@@ -6,7 +6,13 @@
       }
     }]
   ],
-  "plugins": ["syntax-flow", "syntax-dynamic-import", "transform-flow-strip-types", "transform-async-to-generator"],
+  "plugins": [
+    "syntax-flow",
+    "syntax-dynamic-import",
+    "transform-flow-strip-types",
+    "transform-async-to-generator",
+    "transform-object-rest-spread"
+  ],
   "env": {
     "development": {
       "sourceMaps": true
