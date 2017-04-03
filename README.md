@@ -1,3 +1,12 @@
+# Announcement
+
+This plugin is now [`react-loadable/babel`](https://github.com/thejameskyle/react-loadable#babel-plugin)!
+
+---
+
+
+
+
 # babel-plugin-transform-react-loadable
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/motiz88/babel-plugin-transform-react-loadable.svg)](https://greenkeeper.io/)
@@ -102,25 +111,6 @@ require("babel-core").transform("code", {
   plugins: ["transform-react-loadable"]
 });
 ```
-
-## Development
-
-Use npm v3: `npm install -g npm@3`
-
-```sh
-git clone https://github.com/motiz88/babel-plugin-transform-react-loadable
-cd babel-plugin-transform-react-loadable
-npm install
-# ... hackity hack hack ...
-npm run test:local # Including tests (mocha), code coverage (nyc), code style (eslint),
-                   # and type checks (flow).
-```
-
-See package.json for more dev scripts you can use.
-
-## Contributing
-
-PRs are very welcome. Please make sure that `test:local` passes on your branch.
 
 [circle-image]: https://img.shields.io/circleci/project/motiz88/babel-plugin-transform-react-loadable/master.svg?style=flat-square
 [circle-url]: https://circleci.com/gh/motiz88/babel-plugin-transform-react-loadable
